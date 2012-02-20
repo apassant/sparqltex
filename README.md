@@ -1,19 +1,19 @@
-What
+### What
 - A simple way to embed SPARQL query results in LaTeX
 
-How
+### How
 - python sparqltex example.tex
 
-Licence
+### Licence
 - Public domain
 
-Who
+### Who
 - Alexandre Passant - http://apassant.net
 
-Requirements
+### Requirements
 - Python SPARQLWrapper module
 - roqet (From redland / librdf.org)
 - pdflatex
 
-Credits
+### Credits
 - Inspired by http://www.imada.sdu.dk/~ehmsen/python.sty (404, see http://www.texample.net/weblog/2008/oct/24/embedding-python-latex/)
