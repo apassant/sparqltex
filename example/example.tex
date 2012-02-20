@@ -1,0 +1,58 @@
+\documentclass[10pt]{article}
+
+\usepackage{sparql}
+\usepackage{hyperref}
+\usepackage{paralist}
+
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+
+\begin{document}
+    
+Rendering example for sparql{\TeX}. Not super fancy, but you got the idea.
+\newline
+
+\textbf{Some events I co-chaired}
+%% Running a query on a RDFa enabled file (wordpress site)
+\begin{sparql}
+data = "http://apassant.net/committees/"
+query = """
+SELECT ?rolelabel ?eventlabel ?eventhomepage ?toplabel ?tophomepage
+WHERE {
+<http://apassant.net/alex> swc:holdsRole [
+    a swc:Chair ;
+    rdfs:label ?rolelabel ;
+    swc:isRoleAt [
+        a swc:WorkshopEvent ;
+        rdfs:label ?eventlabel ;    
+        foaf:homepage ?eventhomepage ;
+        swc:isSubEventOf [
+            rdfs:label ?toplabel ;  
+            foaf:homepage ?tophomepage ;
+        ]
+    ]
+]
+}"""
+tlist = "innerlist"
+template = "%(rolelabel)s at \href{%(eventhomepage)s}{%(eventlabel)s} co-located with \href{%(tophomepage)s}{%(toplabel)s}"
+\end{sparql}
+
+\vspace{5 mm}
+    
+\textbf{Me at \href{http://seevl.net}{seevl.net}}
+%% Running a query on a LinkedIn profile (uF to RDF using any23)
+\begin{innerlist}
+\begin{sparql}
+data = "http://linkedin.com/in/apassant"
+query = """
+SELECT DISTINCT ?description
+WHERE {
+[] ical:description ?description ;
+	ical:dtstart '2011-02-01' .
+}"""
+template = "%(description)s"
+\end{sparql}
+\end{innerlist}
+
+\end{document}
+

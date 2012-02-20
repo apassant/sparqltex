@@ -1,0 +1,37 @@
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+
+\ProvidesPackage{sparql}[2012/02/20 - sparqlTeX: SPARQL in LaTeX]
+
+\newwrite\@out
+\newwrite\@module
+
+%% sparql environment
+
+\begingroup \catcode `|=0 \catcode `[=1
+\catcode`]=2 \catcode `\{=12 \catcode `\}=12
+\catcode`\\=12 |gdef|@xsparql#1\end{sparql}[|immediate|write|@out[#1]|end[sparql]]
+|endgroup
+
+\def\sparql{\kernel@ifnextchar [{\@sparql}{\@sparql[]}}
+
+\def\@sparql[#1]{%
+\gdef\@sparqlinclude{#1}
+\immediate\openout\@out=sparql.py
+\newlinechar='15
+\begingroup \catcode`\^^M=12 %
+\let\do\@makeother\dospecials\obeyspaces%
+\@xsparql}
+
+\def\endsparql{%
+\endgroup
+\immediate\closeout\@out
+\@writemodule
+\immediate\write18{cat \@sparqlinclude\space sparql.py ;  python sparqltex.py -run sparql tmpres}
+\immediate\input tmpres
+\immediate\write18{sleep 2}
+}
+
+\def\@writemodule{%
+\immediate\openout\@module=latex.py
+\immediate\write\@module{jobname="\jobname"}
+\immediate\closeout\@module}
