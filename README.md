@@ -2,7 +2,7 @@
 - A simple way to embed SPARQL query results in LaTeX
 
 * How
-- python sparqltex example/ex.tex
+- python sparqltex example.tex
 
 * Licence
 - Public domain
